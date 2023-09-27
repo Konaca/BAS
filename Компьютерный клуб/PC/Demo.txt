@@ -1,0 +1,65 @@
+Motherboard
+0
+GPU
+0
+CPU
+0
+HDD
+0
+SSD
+0
+RAM
+0
+Power_supply_unit
+0
+CPU_Fan
+0
+Fan
+0
+Case
+0
+Screen
+0
+Keyboard
+0
+Mouse
+0
+Headphones
+0
+Table
+0
+Chair
+0
+RAM_Quantity
+0
+HDD_Quantity
+0
+SSD_Quantity
+0
+Money
+0
+Games
+Mood
+n
+Car Cry 5
+n
+Grand Auto 4
+n
+Half-Lifa 4
+n
+Need for sped
+n
+Dota 3
+n
+Sins 8
+n
+Ctulhu
+n
+Assasin`s Cried 2
+n
+Kaptial: War Zone
+n
+Mincraft
+n
+Call of Dad
+n
