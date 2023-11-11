@@ -29,37 +29,20 @@ def D_Stop ():
     print ("Время выполнения: " + str(time.perf_counter()-Start))
     print ("")
 
-def Profit (second):
-    Second = int(second)
-    minute = 0
-    hour = 0
-    day = 0
-    month = 0
-    year = 0
-    
-    while Second >= 0:
-        if Second >= 60:
-            minute = minute + 1
-            Second = Second - 60
+def Profit (seconds):
+    minutes = seconds // 60
+    hours = minutes // 60
+    days = hours // 24
+    months = days // 30  # Приблизительное значение
+    years = days // 365  # Приблизительное значение
 
-            if minute >= 60:
-                hour = hour + 1
-                minute = minute - 60
+    seconds %= 60
+    minutes %= 60
+    hours %= 24
+    days %= 30
+    months %= 12
 
-                if hour >= 24:
-                    day = day + 1
-                    hour = hour - 24
-
-                    if day >= 30:
-                        month = month + 1
-                        day = day - 30
-
-                        if month >= 12:
-                            year = year + 1
-                            month = month - 12
-        else:
-            break
-    Time = (year,month,day,hour,minute,Second)
+    return [int(years), int(months), int(days), int(hours), int(minutes), int(seconds)]
     
     return Time
 
