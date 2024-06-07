@@ -43,8 +43,6 @@ def Profit (seconds):
     months %= 12
 
     return [int(years), int(months), int(days), int(hours), int(minutes), int(seconds)]
-    
-    return Time
 
 def Analitic_profit (Hour, Day, Time_Use, Client_Hour, Money_Hour):
     Profit = (((int(Time_Use) * int(Money_Hour)) * int(Client_Hour))*(int(Hour)/int(Time_Use)))*int(Day)
@@ -52,51 +50,31 @@ def Analitic_profit (Hour, Day, Time_Use, Client_Hour, Money_Hour):
 
 def PC_Price_One (PC_list, i):
     File = PC_list[i]
-    F = open (File, 'r')
+    with open(File, 'r') as F:
+        lines = F.readlines()
 
     #Части
-    F.readline ()
-    Motherboard = int(F.readline ())
-    F.readline ()
-    GPU = int(F.readline ())
-    F.readline ()
-    CPU = int(F.readline ())
-    F.readline ()
-    HDD = int(F.readline ())
-    F.readline ()
-    SSD = int(F.readline ())
-    F.readline ()
-    RAM = int(F.readline ())
-    F.readline ()
-    Power_supply_unit = int(F.readline ())
-    F.readline ()
-    CPU_Fan = int(F.readline ())
-    F.readline ()
-    Fan = int(F.readline ())
-    F.readline ()
-    Case = int(F.readline ())
-    F.readline ()
-    Screen = int(F.readline ())
-    F.readline ()
-    Keyboard = int(F.readline ())
-    F.readline ()
-    Mouse = int(F.readline ())
-    F.readline ()
-    Headphones = int(F.readline ())
-    F.readline ()
-    Table = int(F.readline ())
-    F.readline ()
-    Chair = int(F.readline ())
-    F.readline ()
+    Motherboard = int(lines[1])
+    GPU = int(lines[3])
+    CPU = int(lines[5])
+    HDD = int(lines[7])
+    SSD = int(lines[9])
+    RAM = int(lines[11])
+    Power_supply_unit = int(lines[13])
+    CPU_Fan = int(lines[15])
+    Fan = int(lines[17])
+    Case = int(lines[19])
+    Screen = int(lines[21])
+    Keyboard = int(lines[23])
+    Mouse = int(lines[25])
+    Headphones = int(lines[27])
+    Table = int(lines[29])
+    Chair = int(lines[31])
     #Доп. информация
-    RAM_Quantity = int(F.readline ())
-    F.readline ()
-    HDD_Quantity = int(F.readline ())
-    F.readline ()
-    SSD_Quantity = int(F.readline ())
+    RAM_Quantity = int(lines[33])
+    HDD_Quantity = int(lines[35])
+    SSD_Quantity = int(lines[37])
 
-    F.close()
-    
     PC_Money = Expenses_Club_PC (Motherboard,GPU,CPU,HDD,SSD,RAM,Power_supply_unit,CPU_Fan,
                                  Fan,Case,Screen,Keyboard,Mouse,Headphones,Table,Chair,
                                  RAM_Quantity,HDD_Quantity,SSD_Quantity)
@@ -104,64 +82,18 @@ def PC_Price_One (PC_list, i):
 
 def Software_One (PC_list, i):
     File = PC_list[i]
-    F = open (File, 'r')
+    with open(File, 'r') as F:
+        lines = F.readlines()
 
-    for i in range(42):
-        F.readline ()
-
-    Game_1 = F.readline ()
-    F.readline ()
-    Game_2 = F.readline ()
-    F.readline ()
-    Game_3 = F.readline ()
-    F.readline ()
-    Game_4 = F.readline ()
-    F.readline ()
-    Game_5 = F.readline ()
-    F.readline ()
-    Game_6 = F.readline ()
-    F.readline ()
-    Game_7 = F.readline ()
-    F.readline ()
-    Game_8 = F.readline ()
-    F.readline ()
-    Game_9 = F.readline ()
-    F.readline ()
-    Game_10 = F.readline ()
-    F.readline ()
-    Game_11 = F.readline ()
-    F.readline ()
-    Game_12 = F.readline ()
-
-    F.close()
-
-    Game_1 = Game_1[0]
-    Game_2 = Game_2[0]
-    Game_3 = Game_3[0]
-    Game_4 = Game_4[0]
-    Game_5 = Game_5[0]
-    Game_6 = Game_6[0]
-    Game_7 = Game_7[0]
-    Game_8 = Game_8[0]
-    Game_9 = Game_9[0]
-    Game_10 = Game_10[0]
-    Game_11 = Game_11[0]
-    Game_12 = Game_12[0]
-
-    Game_list = (Game_1,Game_2,Game_3,Game_4,Game_5,Game_6,Game_7,Game_8,Game_9,Game_10,Game_11,Game_12)
+    Game_list = [lines[i][0] for i in range(42, 66, 2)]
     return Game_list
 
 def Money_One (PC_list, i):
     File = PC_list[i]
-    F = open (File, 'r')
+    with open(File, 'r') as F:
+        lines = F.readlines()
 
-    for i in range(39):
-        F.readline ()
-
-    Money = F.readline ()
-    Money = Money[0:2]
-
-    F.close()
+    Money = lines[39][0:2]
     return Money
 
 def Expenses_Club_PC (Motherboard,GPU,CPU,HDD,SSD,RAM,Power_supply_unit,CPU_Fan,Fan,
@@ -169,245 +101,172 @@ def Expenses_Club_PC (Motherboard,GPU,CPU,HDD,SSD,RAM,Power_supply_unit,CPU_Fan,
                       HDD_Quantity,SSD_Quantity):
 
     #Материнская плата
-    if str(Motherboard) == "0":
-        Motherboard_Price = 0
-    elif str(Motherboard) == "1":
-        Motherboard_Price = 48
-    elif str(Motherboard) == "2":
-        Motherboard_Price = 164
-    elif str(Motherboard) == "3":
-        Motherboard_Price = 360
-    else:
-        Motherboard_Price = 0
+    Motherboards_List = {
+        "0": 0,
+        "1": 48,
+        "2": 164,
+        "3": 360
+    }
+    Motherboard_Price = Motherboards_List.get(Motherboard)
 
     #GPU
-    if str(GPU) == "0":
-        GPU_Price = 0
-    elif str(GPU) == "1":
-        GPU_Price = 68
-    elif str(GPU) == "2":
-        GPU_Price = 130
-    elif str(GPU) == "3":
-        GPU_Price = 246
-    elif str(GPU) == "4":
-        GPU_Price = 417
-    elif str(GPU) == "5":
-        GPU_Price = 830
-    else:
-        GPU_Price = 0
+    GPUs_List = {
+        "0": 0,
+        "1": 68,
+        "2": 130,
+        "3": 246,
+        "4": 417,
+        "5": 830
+    }
+    GPU_Price = GPUs_List.get(GPU)
 
     #CPU
-    if str(CPU) == "0":
-        CPU_Price = 0
-    elif str(CPU) == "1":
-        CPU_Price = 29
-    elif str(CPU) == "2":
-        CPU_Price = 58
-    elif str(CPU) == "3":
-        CPU_Price = 89
-    elif str(CPU) == "4":
-        CPU_Price = 116
-    elif str(CPU) == "5":
-        CPU_Price = 130
-    elif str(CPU) == "6":
-        CPU_Price = 194
-    elif str(CPU) == "7":
-        CPU_Price = 170
-    elif str(CPU) == "8":
-        CPU_Price = 289
-    elif str(CPU) == "9":
-        CPU_Price = 438
-    elif str(CPU) == "10":
-        CPU_Price = 610
-    else:
-        CPU_Price = 0
+    CPUs_List = {
+        "0": 0,
+        "1": 29,
+        "2": 58,
+        "3": 89,
+        "4": 116,
+        "5": 130,
+        "6": 194,
+        "7": 170,
+        "8": 189,
+        "9": 438,
+        "10": 610
+    }
+    CPU_Price = CPUs_List.get(CPU)
 
     #HDD
-    if str(HDD) == "0":
-        HDD_Price = 0
-    elif str(HDD) == "1":
-        HDD_Price = 32
-    elif str(HDD) == "2":
-        HDD_Price = 58
-    elif str(HDD) == "3":
-        HDD_Price = 120
-    elif str(HDD) == "4":
-        HDD_Price = 210
-    else:
-        HDD_Price = 0
+    HDDs_List = {
+        "0": 0,
+        "1": 32,
+        "2": 58,
+        "3": 120,
+        "4": 210
+    }
+    HDD_Price = HDDs_List.get(HDD)
 
     #SSD
-    if str(SSD) == "0":
-        SSD_Price = 0
-    elif str(SSD) == "1":
-        SSD_Price = 50
-    elif str(SSD) == "2":
-        SSD_Price = 90
-    elif str(SSD) == "3":
-        SSD_Price = 170
-    else:
-        SSD_Price = 0
+    SSDs_List = {
+        "0": 0,
+        "1": 50,
+        "2": 90,
+        "3": 170
+    }
+    SSD_Price = SSDs_List.get(SSD)
 
     #ОЗУ
-    if str(RAM) == "0":
-        RAM_Price = 0
-    elif str(RAM) == "1":
-        RAM_Price = 12
-    elif str(RAM) == "2":
-        RAM_Price = 30
-    elif str(RAM) == "3":
-        RAM_Price = 40
-    elif str(RAM) == "4":
-        RAM_Price = 80
-    elif str(RAM) == "5":
-        RAM_Price = 98
-    elif str(RAM) == "6":
-        RAM_Price = 138
-    elif str(RAM) == "7":
-        RAM_Price = 200
-    else:
-        RAM_Price = 0
+    RAMs_List = {
+        "0": 0,
+        "1": 12,
+        "2": 30,
+        "3": 40,
+        "4": 80,
+        "5": 98,
+        "6": 138,
+        "7": 200
+    }
+    RAM_Price = RAMs_List.get(RAM)
 
     #Блок питания
-    if str(Power_supply_unit) == "0":
-        Power_supply_unit_Price = 0
-    elif str(Power_supply_unit) == "1":
-        Power_supply_unit_Price = 30
-    elif str(Power_supply_unit) == "2":
-        Power_supply_unit_Price = 46
-    elif str(Power_supply_unit) == "3":
-        Power_supply_unit_Price = 70
-    elif str(Power_supply_unit) == "4":
-        Power_supply_unit_Price = 100
-    elif str(Power_supply_unit) == "5":
-        Power_supply_unit_Price = 130
-    elif str(Power_supply_unit) == "6":
-        Power_supply_unit_Price = 200
-    else:
-        Power_supply_unit_Price = 0
+    Power_supply_units_List = {
+        "0": 0,
+        "1": 30,
+        "2": 46,
+        "3": 70,
+        "4": 100,
+        "5": 130,
+        "6": 200
+    }
+    Power_supply_unit_Price = Power_supply_units_List.get(Power_supply_unit)
 
     #Охлаждение процессора
-    if str(CPU_Fan) == "0":
-        CPU_Fan_Price = 0
-    elif str(CPU_Fan) == "1":
-        CPU_Fan_Price = 26
-    elif str(CPU_Fan) == "2":
-        CPU_Fan_Price = 90
-    else:
-        CPU_Fan_Price = 0
+    CPU_Fans_List = {
+        "0": 0,
+        "1": 26,
+        "2": 90
+    }
+    CPU_Fan_Price = CPU_Fans_List.get(CPU_Fan)
 
     #Охлаждение корпуса
-    if str(Fan) == "0":
-        Fan_Price = 0
-    elif str(Fan) == "1":
-        Fan_Price = 18
-    elif str(Fan) == "2":
-        Fan_Price = 64
-    else:
-        Fan_Price = 0
+    Fans_List = {
+        "0": 0,
+        "1": 18,
+        "2": 64
+    }
+    Fan_Price = Fans_List.get(Fan)
 
     #Корпус
-    if str(Case) == "0":
-        Case_Price = 0
-    elif str(Case) == "1":
-        Case_Price = 17
-    elif str(Case) == "2":
-        Case_Price = 34
-    elif str(Case) == "3":
-        Case_Price = 68
-    elif str(Case) == "4":
-        Case_Price = 120
-    elif str(Case) == "5":
-        Case_Price = 200
-    else:
-        Case_Price = 0
+    Cases_List = {
+        "0": 0,
+        "1": 17,
+        "2": 34,
+        "3": 68,
+        "4": 120,
+        "5": 200
+    }
+    Case_Price = Cases_List.get(Case)
 
     #Монитор
-    if str(Screen) == "0":
-        Screen_Price = 0
-    elif str(Screen) == "1":
-        Screen_Price = 27
-    elif str(Screen) == "2":
-        Screen_Price = 70
-    elif str(Screen) == "3":
-        Screen_Price = 133
-    elif str(Screen) == "4":
-        Screen_Price = 270
-    elif str(Screen) == "5":
-        Screen_Price = 570
-    else:
-        Screen_Price = 0
+    Screens_List = {
+        "0": 0,
+        "1": 27,
+        "2": 70,
+        "3": 133,
+        "4": 270,
+        "5": 570
+    }
+    Screen_Price = Screens_List.get(Screen)
 
     #Клавиатура
-    if str(Keyboard) == "0":
-        Keyboard_Price = 0
-    elif str(Keyboard) == "1":
-        Keyboard_Price = 14
-    elif str(Keyboard) == "2":
-        Keyboard_Price = 36
-    elif str(Keyboard) == "3":
-        Keyboard_Price = 68
-    else:
-        Keyboard_Price = 0
+    Keyboards_List = {
+        "0": 0,
+        "1": 14,
+        "2": 36,
+        "3": 68
+    }
+    Keyboard_Price = Keyboards_List.get(Keyboard)
 
     #Мышь
-    if str(Mouse) == "0":
-        Mouse_Price = 0
-    elif str(Mouse) == "1":
-        Mouse_Price = 8
-    elif str(Mouse) == "2":
-        Mouse_Price = 20
-    elif str(Mouse) == "3":
-        Mouse_Price = 46
-    elif str(Mouse) == "4":
-        Mouse_Price = 160
-    else:
-        Mouse_Price = 0
+    Mouses_List = {
+        "0": 0,
+        "1": 8,
+        "2": 20,
+        "3": 46,
+        "4": 160
+    }
+    Mouse_Price = Mouses_List.get(Mouse)
 
     #Наушники
-    if str(Headphones) == "0":
-        Headphones_Price = 0
-    elif str(Headphones) == "1":
-        Headphones_Price = 25
-    elif str(Headphones) == "2":
-        Headphones_Price = 70
-    elif str(Headphones) == "3":
-        Headphones_Price = 120
-    else:
-        Headphones_Price = 0
+    Headphones_List = {
+        "0": 0,
+        "1": 25,
+        "2": 70,
+        "3": 120
+    }
+    Headphones_Price = Headphones_List.get(Headphones)
 
     #Стол
-    if str(Table) == "0":
-        Table_Price = 0
-    elif str(Table) == "1":
-        Table_Price = 23
-    elif str(Table) == "2":
-        Table_Price = 66
-    elif str(Table) == "3":
-        Table_Price = 210
-    elif str(Table) == "4":
-        Table_Price = 300
-    elif str(Table) == "5":
-        Table_Price = 780
-    else:
-        Table_Price = 0
+    Tables_List = {
+        "0": 0,
+        "1": 23,
+        "2": 66,
+        "3": 210,
+        "4": 300,
+        "5": 780
+    }
+    Table_Price = Tables_List.get(Table)
 
     #Стул
-    if str(Chair) == "0":
-        Chair_Price = 0
-    elif str(Chair) == "1":
-        Chair_Price = 13
-    elif str(Chair) == "2":
-        Chair_Price = 169
-    elif str(Chair) == "3":
-        Chair_Price = 460
-    else:
-        Chair_Price = 0
+    Chairs_list = {
+        "0": 0,
+        "1": 13,
+        "2": 169,
+        "3": 460
+    }
+    Chair_Price = Chairs_list.get(Chair)
 
-    Price = (int(Motherboard_Price) + int(GPU_Price) + int(CPU_Price) + (int(HDD_Price) * int(HDD_Quantity))
-             + (int(SSD_Price) * int(SSD_Quantity)) + (int(RAM_Price) * int(RAM_Quantity)) + int(Power_supply_unit_Price) +
-             int(CPU_Fan_Price) + int(Fan_Price) + int(Case_Price) + int(Screen_Price) + int(Keyboard_Price) +
-             int(Mouse_Price) + int(Headphones_Price) + int(Table_Price) + int(Chair_Price))
+    Price = (Motherboard_Price + GPU_Price + CPU_Price + (HDD_Price * HDD_Quantity) + (SSD_Price * SSD_Quantity) + (RAM_Price * RAM_Quantity) + Power_supply_unit_Price + CPU_Fan_Price + Fan_Price + Case_Price + Screen_Price + Keyboard_Price + Mouse_Price + Headphones_Price + Table_Price + Chair_Price)
     return Price
 
 while 1 > 0:
